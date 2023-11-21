@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+:root{
+    font-size: 62.5%;
+    --light-gray: #ccc;
+    --black: #131111;
+    --neon-green: rgb(49, 151, 151);
+    --btn-background-color:#d4d4d44d;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-size: 1.6rem;
+    font-family: 'Poppins', sans-serif;
+    width: min(90%, 85%);
+    margin-inline: auto;
+    margin-block: 3rem;
+}
+
+img{
+    max-width: 100%;
+    display: block;
+} 
+
+.search-icon, .close-icon{
+    width: 22px;
+}
+ .close-icon{
+position: absolute;
+top: 5px;
+right: 12px;
+cursor: pointer;
+ }
+.search-icon{
+position: absolute;
+top: 6px;
+left: 15px;
+}
+
+.search-filter{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.search-filter-box{
+    position: relative;
+}
+
+.search-input{
+    width: 45vw;
+    height: 32px;
+    border: 1px solid var(--light-gray);
+    border-radius: 3px;
+    color: var(--black);
+    text-indent: 4.2rem;
+    
+    
+} 
+
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+    -webkit-appearance:none;
+}
+
+.search-input::placeholder{
+    text-indent: 4.2rem;
+}
+
+.search-input:focus-visible,.search-input:focus-within {
+    outline-color: var(--neon-green);
+}
+
+.btn{
+    all:unset;
+    cursor: pointer;
+    background-color: var(--btn-background-color);
+    color: var(--neon-green);
+    font-weight: 500;
+    padding: 0.4em 0.6em;
+    border-radius: 3px;
+    font-size: 1.4rem;
+}
+
+.close-btn{
+    all:unset;
+    display: none;
+}
+
+.search-btn{
+    all:unset;
+}
