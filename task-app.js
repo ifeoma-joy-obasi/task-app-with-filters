@@ -27,7 +27,7 @@ const upDateUi = () => {
             <th class="status">Status</th>
             <th class="date">Date</th>
             <th class="priority">priority</th>
-            <th class="icon">icon</th>
+            <th class="icon"></th>
       `;
     data.map((task, index) => {
       let tr = document.createElement("tr");
@@ -40,7 +40,6 @@ const upDateUi = () => {
     <td><button class = ${task.status.toLowerCase()}>${task.priority}</button></td>
     <td><img src=${"./images/vertical-dots.svg"} alt="three dot icon" class="vertical-icon"><td>
     `;
-      console.log(tr)
       tableBody.appendChild(tr);
     });
   }
@@ -73,7 +72,7 @@ const upDateFilteredUi = () => {
             <th class="status">Status</th>
             <th class="date">Date</th>
             <th class="priority">priority</th>
-            <th class="icon">icon</th>
+            <th class="icon"></th>
       `;
 
       //create and append the tr element to the tbody element
@@ -91,7 +90,6 @@ const upDateFilteredUi = () => {
       }</button></td>
       <td><img src=${"./images/vertical-dots.svg"} alt="three dot icon" class="vertical-icon"><td>
       `;
-      console.log(tr)
       tableBody.appendChild(tr);
     });
   }

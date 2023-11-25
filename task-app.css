@@ -6,6 +6,20 @@
     --neon-green: rgb(49, 151, 151);
     --btn-background-color:#d4d4d44d;
     --td-text-color:#7e7e7e;
+    --border-bottom-color:#f3e9e9;
+    --inprogress-bg:rgb(219, 249, 249);
+    --inprogress-color:rgb(49, 151, 151);
+    --todo-color:cornflowerblue;
+    --todo-bg:rgb(215, 225, 246);
+    --done-color:tomato;
+    --done-bg:#fadec4;
+    --high-bg:rgb(219, 249, 249);
+    --high-color:rgb(49, 151, 151);
+    --medium-bg:rgb(246, 209, 246);
+    --medium-color:rgb(210, 53, 210);
+    --low-bg:#f4e9df;
+    --low-color:#f3800c;
+    --span-empty-state-color:#444;
 }
 
 *{
@@ -23,7 +37,7 @@ body{
 }
 
 img{
-    max-width: 100%;
+    width: 100%;
     display: block;
 } 
 
@@ -119,7 +133,9 @@ th{
 .table-container{
     overflow-x: auto;
 }
- .serial-num{
+
+
+  .serial-num{
 width: 7%;
 }
 .description{
@@ -133,12 +149,12 @@ width: 18%;
 }
 
 .priority{
-width: 20%;
+width: 25%;
 } 
 
 .icon{
     width: 10%;
-}
+} 
 
  table{
     border-collapse: collapse;
@@ -146,41 +162,41 @@ width: 20%;
 }
 
 tr.border-bottom{
-    border-bottom: 1px solid #f3e9e9;
+    border-bottom: 1px solid var(--border-bottom-color);
 }
 
 .table-heading{
     background-color: var(--btn-background-color);
 }
 .inprogress{
-   background-color: rgb(219, 249, 249);
-  color: rgb(49, 151, 151);
+   background-color: var(--inprogress-bg);
+  color: var(--inprogress-color);
 }
 
 .todo{  
-    color: cornflowerblue;
-  background-color: rgb(215, 225, 246);
+    color: var(--todo-color);
+  background-color: var(--todo-bg);
 }
 
 .done{
-  color: tomato;
- background-color: #fadec4;
+  color: var(--done-color);
+ background-color: var(--done-bg);
 }
 
 
 .high{
-  background-color: rgb(219, 249, 249);
-  color: rgb(49, 151, 151);
+  background-color: var(--high-bg);
+  color: var(--high-color);
 }
 
 .medium{
-    background-color: rgb(246, 209, 246);
-  color: rgb(210, 53, 210);
+    background-color: var(--medium-bg);
+  color: var(--medium-color);
 }
 
 .low{
-   background-color: #f4e9df;
-  color: #f3800c;
+   background-color: var(--low-bg);
+  color: var(--low-color);
 }
 
 #status-btn{
@@ -198,11 +214,9 @@ margin-bottom: 1.2rem;
     display: grid;
     justify-content: center;
     text-align: center;
-    margin-left: 4em ;
-    margin-top: 2em;
 }
 .empty-state > span{
-color: #444;
+color: var(--span-empty-state-color);
 font-size: 1.4rem;
 }
 
@@ -210,20 +224,24 @@ font-size: 1.4rem;
 color: var(--black);
 }
 
-thead th {
+thead  th {
   padding: 10px;
   font-size: 1.4rem;
   color: var(--black);
+
 }
+
 
 tbody td{
     padding: 10px;
 }
 
 .pagination{
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     color: var(--black);
     display: flex;
+    margin-top: 1.7em;
+    align-items: center;
     justify-content: space-between;
 }
 
@@ -231,3 +249,4 @@ tbody td{
     display: flex;
     gap: 1.5em;
 }
+
