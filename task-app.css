@@ -112,7 +112,7 @@ input[type="search"]::-webkit-search-results-decoration {
 
 .round-btn{
     border: none;
-    padding: 0.1em 0.4em;
+    padding: 0.2em 0.6em;
     border-radius: 100vmax;
     font-size: 1.3rem;
     cursor: pointer;
@@ -125,6 +125,7 @@ td{
     border-bottom: 1px solid var(--border-bottom-color);
     padding: 10px 0px;
     border-collapse: collapse;
+    line-height: 0.4;
 }
 
 
