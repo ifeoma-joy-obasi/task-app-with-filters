@@ -9,14 +9,25 @@
 <body>
 <div class="search-filter">
     <div class="search-filter-box">
-    <img src="./images/icon-search-1 (1).svg" alt="search filter icon" class="search-icon">
+    <img src="./images/icon-search.svg" alt="search filter icon" class="search-icon">
     <input type="search" placeholder="Filter by description.." class="search-input" id="searchInput">
-    <button class="close-btn" id="closeIcon"><img src="./images/close-75.svg" alt="close icon" class="close-icon" ></button>
+    <button class="close-btn" id="closeIcon"><img src="./images/close-btn.svg" alt="close icon" class="close-icon" ></button>
     </div>
     <div>
     <button class="btn">+ Add Task</button> 
     </div>
 </div>
+
+<div id="filterByStatus" class="filter-by-status">
+    <h4>Filter by Status</h4>
+    <div id="statusBtns" class="btn-container">
+        <button  class="initial-color">All</button>
+        <button class="initial-color">Done</button>
+        <button class="initial-color">In progress</button>
+        <button class="initial-color">Todo</button>
+    </div>
+</div>
+
 
 <div class="table-container">
 <table>
@@ -31,10 +42,10 @@
 
 <div class="pagination">
     <div class="page-number">
-        <b>Displaying <span>1</span> - <span>3</span> of <span> 3</span></b>
+        <div>Displaying <span>1</span> - <span>3</span> of <span> 3</span></div>
     </div>
     <div class="previous-and-next">
-        <b class="flex"><span>Previous</span> <span>1</span> <span>Next</span>  </b>
+        <div class="flex"><span>Previous</span> <span>1</span> <span>Next</span>  </div>
     </div>
 </div>
 
@@ -42,4 +53,5 @@
 <script src="./task-app.js"></script>
 
 </body>
+
 </html>

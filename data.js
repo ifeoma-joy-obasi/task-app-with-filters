@@ -1,7 +1,9 @@
+
+
 let date = new Date().toLocaleDateString("en-us", { day: "numeric" });
 let month = new Date().toLocaleDateString("en-us", { month: "short" });
 let year = new Date().toLocaleDateString("en-us", { year: "numeric" });
-const FormattedDate = `${date}th ${month[0].toLowerCase() + month.slice(1)}, ${year}`;
+const FormattedDate = `${date}st ${month[0].toLowerCase() + month.slice(1)}, ${year}`;
 
 
 let data = [

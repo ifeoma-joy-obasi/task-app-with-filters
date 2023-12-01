@@ -7,19 +7,21 @@
     --btn-background-color:#d4d4d44d;
     --td-text-color:#7e7e7e;
     --border-bottom-color:#f3e9e9;
-    --inprogress-bg:rgb(219, 249, 249);
-    --inprogress-color:rgb(49, 151, 151);
-    --todo-color:cornflowerblue;
-    --todo-bg:rgb(215, 225, 246);
-    --done-color:tomato;
-    --done-bg:#fadec4;
-    --high-bg:rgb(219, 249, 249);
-    --high-color:rgb(49, 151, 151);
-    --medium-bg:rgb(246, 209, 246);
-    --medium-color:rgb(210, 53, 210);
-    --low-bg:#f4e9df;
-    --low-color:#f3800c;
+    --inprogress-bg:#f4e9df;
+    --inprogress-color:#f3800c;
+    --done-color:rgb(49, 151, 151);
+    --done-bg:rgb(219, 249, 249);
+    --high-bg:rgb(252, 210, 202);
+    --high-color:tomato; 
+    --medium-bg:rgb(215, 225, 246);
+    --medium-color:cornflowerblue;
+    --todo-color:rgb(210, 53, 210);
+    --todo-bg:rgb(246, 215, 243);
+    --low-bg:rgb(219, 249, 249);
+    --low-color:rgb(49, 151, 151);
     --span-empty-state-color:#444;
+    --btn-initial-color:#f0f0f0;
+
 }
 
 *{
@@ -108,66 +110,38 @@ input[type="search"]::-webkit-search-results-decoration {
     display: none;
 }
 
-td > button{
+.round-btn{
     border: none;
     padding: 0.1em 0.4em;
     border-radius: 100vmax;
     font-size: 1.3rem;
+    cursor: pointer;
 }
 
 td{
     color: var(--td-text-color);
     font-size: 1.3rem;
-}
-
-
-
-th{
     text-align: left;
+    border-bottom: 1px solid var(--border-bottom-color);
+    padding: 10px 0px;
+    border-collapse: collapse;
 }
+
 
 .vertical-icon{
-    width: 15px;
+    font-size: 1.5rem;
     cursor: pointer;
-}
-.table-container{
-    overflow-x: auto;
+font-weight: 600;
 }
 
 
-  .serial-num{
-width: 7%;
-}
-.description{
-width: 50%;
-}
-.status{
-    width: 15%;
-}
-.date{
-width: 18%;
-}
-
-.priority{
-width: 25%;
-} 
-
-.icon{
-    width: 10%;
-} 
-
- table{
+table{
+    width: 100%;
     border-collapse: collapse;
-    margin-top: 3em;
 }
 
-tr.border-bottom{
-    border-bottom: 1px solid var(--border-bottom-color);
-}
 
-.table-heading{
-    background-color: var(--btn-background-color);
-}
+
 .inprogress{
    background-color: var(--inprogress-bg);
   color: var(--inprogress-color);
@@ -199,10 +173,6 @@ tr.border-bottom{
   color: var(--low-color);
 }
 
-#status-btn{
-  border-radius: 100vmax;
-  border: none;
-}
 
 .empty-state > .empty-state-search-icon{
 width: 65px;
@@ -225,16 +195,13 @@ color: var(--black);
 }
 
 thead  th {
-  padding: 10px;
+  padding: 10px 6px 10px 6px;
   font-size: 1.4rem;
   color: var(--black);
-
+text-align: left;
+background-color: var(--btn-background-color);
 }
 
-
-tbody td{
-    padding: 10px;
-}
 
 .pagination{
     font-size: 1.3rem;
@@ -250,3 +217,30 @@ tbody td{
     gap: 1.5em;
 }
 
+
+.btn-container :is(button){
+    padding: 0.4em 0.7em;
+    border-radius: 100vmax;
+    font-weight: 600;
+    border: none;
+    color: var(--black);
+    margin: 1rem 0px 2rem 0px;
+    cursor: pointer;
+}
+
+.filter-by-status{
+    margin-top: 2rem;
+}
+
+.btn-container {
+    display: flex;
+    gap: 0.5em;
+    color: var(--black);
+}
+.initial-color{
+    background-color: #f0f0f0;
+}
+.highlight{
+    background-color: var(--done-bg);
+    color: var(--done-color) !important;
+}

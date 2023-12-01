@@ -1,7 +1,7 @@
 //variables
-let searchInput = document.querySelector("#searchInput");
-let closeIcon = document.querySelector("#closeIcon");
-let tableBody = document.querySelector("#tableBody");
+const searchInput = document.querySelector("#searchInput");
+const closeIcon = document.querySelector("#closeIcon");
+const tableBody = document.querySelector("#tableBody");
 
 searchInput.addEventListener('focus', () => {
     closeIcon.style.display = 'block'
@@ -19,49 +19,37 @@ closeIcon.addEventListener('mousedown', (e) => {
 })
 
 
-
-const upDateUi = () => {
-    tableHeadings.innerHTML = `
-      <th class="serial-num">S/N</th>
-            <th class="description">Description</th>
-            <th class="status">Status</th>
-            <th class="date">Date</th>
-            <th class="priority">priority</th>
-            <th class="icon"></th>
-      `;
-    data.map((task, index) => {
-      let tr = document.createElement("tr");
-      tr.setAttribute('class', 'border-bottom');
-      tr.innerHTML += `
-    <td>${index + 1}</td>
-    <td>${task.description}</td>
-    <td><button class = ${task.priority.toLowerCase()}>${task.status}</button></td>
-    <td>${task.date}</td>
-    <td><button class = ${task.status.toLowerCase()}>${task.priority}</button></td>
-    <td><img src=${"./images/vertical-dots.svg"} alt="three dot icon" class="vertical-icon"><td>
-    `;
-      tableBody.appendChild(tr);
-    });
-  }
-
-
-
 document.addEventListener('DOMContentLoaded', () => {
-  upDateUi();
+  filteredList.filterByDescription('')
 })
 
 //search functionality
 
-let filteredList = [];
+const filteredList = {
+  list: [],
+  filterByDescription: (query) => {
+    filteredList.list = data.filter(({ description }) => {
+      return description.toLowerCase().includes(query.toLowerCase());
+    });
+    upDateFilteredUi();
+  },
+  filterByStatus: (query) => {
+    filteredList.list = data.filter(({ status }) => {
+      return status.toLowerCase().includes(query.toLowerCase().replace(/\s/g, ""));
+    });
+    upDateFilteredUi();
+  },
+};
 
-let tableHeadingContainer = document.querySelector("#tableHeadingContainer");
-let tableHeadings = document.querySelector("#tableHeadings");
+
+ const tableHeadingContainer = document.querySelector("#tableHeadingContainer");
+ const tableHeadings = document.querySelector("#tableHeadings");
 
 const upDateFilteredUi = () => {
   tableBody.innerHTML = "";
   tableHeadings.innerHTML = "";
-  if (filteredList.length > 0) {
-    filteredList.map((task, index) => {
+  if (filteredList.list.length > 0) {
+    filteredList.list.map((task, index) => {
       //i want to empty the empty state element when the array is being filtered
       emptyState.innerHTML = "";
       
@@ -77,41 +65,61 @@ const upDateFilteredUi = () => {
 
       //create and append the tr element to the tbody element
       let tr = document.createElement("tr");
-      tr.setAttribute("class", "border-bottom");
       tr.innerHTML += `
       <td>${index + 1}</td>
       <td>${task.description}</td>
-      <td><button class = ${task.priority.toLowerCase()}>${
+      <td><button class = "round-btn  ${task.status.toLowerCase()}">${
         task.status
       }</button></td>
       <td>${task.date}</td>
-      <td><button class=${`${task.status.toLowerCase()}`}>${
+      <td><button class="round-btn ${task.priority.toLowerCase()}">${
         task.priority
       }</button></td>
-      <td><img src=${"./images/vertical-dots.svg"} alt="three dot icon" class="vertical-icon"><td>
+      <td><span class="vertical-icon">&#8942;</span><td>
       `;
       tableBody.appendChild(tr);
     });
   }
   
-  if (filteredList.length <= 0) {
+  if (filteredList.list.length <= 0) {
     let emptyState = document.querySelector("#emptyState");
     emptyState.innerHTML = `
-    <img src="./images/icon-search-1 (1).svg" alt="icon search for empty states" class="empty-state-search-icon">
+    <img src="./images/icon-search.svg" alt="icon search for empty states" class="empty-state-search-icon">
     <h4>No Result for "${searchInput.value}"</h4>
     <span>check the spelling or try a new search</span>
     `;
   }
 };
 
+closeIcon.addEventListener('click', () => {
+  filteredList.filterByDescription('');
+})
 
 searchInput.addEventListener("input", (e) => {
-  let value = e.target.value.trim();
-
-  filteredList = data.filter((obj) => {
-      return obj.description.toLowerCase().includes(value.toLowerCase());
-  });
-   upDateFilteredUi();
+  filteredList.filterByDescription(e.target.value.trim());
 });
 
 
+//filter by status functionality
+let buttons = document.querySelectorAll("div#statusBtns button");
+
+  for (btn in buttons) {
+        
+    buttons[btn].onclick = function() {
+        buttons.forEach((btn)=>{
+        btn.classList.remove('highlight');
+        })
+        this.classList.add('highlight');
+    }
+}
+
+buttons.forEach((statusBtn) => {
+  statusBtn.addEventListener('click', (e) => {
+    let text = e.target.textContent.toLowerCase();
+    if (text == "all") {
+      filteredList.filterByStatus("");
+    } else {
+      filteredList.filterByStatus(text);
+    }
+  })
+})
