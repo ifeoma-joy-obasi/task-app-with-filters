@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,200;6..12,300;6..12,500;6..12,700;6..12,800&display=swap');
 :root{
     font-size: 62.5%;
     --light-gray: #ccc;
@@ -32,7 +32,7 @@
 
 body{
     font-size: 1.6rem;
-    font-family: 'Poppins', sans-serif;
+font-family: 'Nunito Sans', sans-serif;
     width: min(95%, 90%);
     margin-inline: auto;
     margin-block: 3rem;
@@ -123,9 +123,9 @@ td{
     font-size: 1.3rem;
     text-align: left;
     border-bottom: 1px solid var(--border-bottom-color);
-    padding: 10px 0px;
+    padding:7px 0px;
     border-collapse: collapse;
-    line-height: 0.4;
+    line-height: 0px;
 }
 
 
@@ -140,8 +140,6 @@ table{
     width: 100%;
     border-collapse: collapse;
 }
-
-
 
 .inprogress{
    background-color: var(--inprogress-bg);
@@ -197,7 +195,7 @@ color: var(--black);
 
 thead  th {
   padding: 10px 6px 10px 6px;
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   color: var(--black);
 text-align: left;
 background-color: var(--btn-background-color);
@@ -219,8 +217,16 @@ background-color: var(--btn-background-color);
 }
 
 
+
+.pagination :is(button){
+            all: unset;
+            color: var(--done-color);
+            cursor: pointer;
+        }
+
 .btn-container :is(button){
     padding: 0.4em 0.7em;
+    font-size: 1.3rem;
     border-radius: 100vmax;
     font-weight: 600;
     border: none;
@@ -229,8 +235,18 @@ background-color: var(--btn-background-color);
     cursor: pointer;
 }
 
+.active-color{
+    color: var(--done-color) !important;
+    background-color: var(--done-bg) !important;
+
+}
+
 .filter-by-status{
     margin-top: 2rem;
+}
+
+.filter-by-status h4{
+font-size: 1.4rem;
 }
 
 .btn-container {
@@ -244,4 +260,14 @@ background-color: var(--btn-background-color);
 .highlight{
     background-color: var(--done-bg);
     color: var(--done-color) !important;
+}
+
+.filter-icon :is(img){
+    width: 23px;
+    cursor: pointer;
+}
+
+.button-filtericon-wrapper{
+    display: flex;
+    justify-content: space-between;
 }

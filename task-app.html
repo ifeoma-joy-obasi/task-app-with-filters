@@ -20,11 +20,16 @@
 
 <div id="filterByStatus" class="filter-by-status">
     <h4>Filter by Status</h4>
+    <div class="button-filtericon-wrapper">
     <div id="statusBtns" class="btn-container">
         <button  class="initial-color">All</button>
         <button class="initial-color">Done</button>
         <button class="initial-color">In progress</button>
         <button class="initial-color">Todo</button>
+    </div>
+    <div class="filter-icon">
+        <img src="./images/filter.svg" alt="filter icon">
+    </div>
     </div>
 </div>
 
@@ -40,14 +45,21 @@
 
 <div class="empty-state" id="emptyState"></div>
 
-<div class="pagination">
-    <div class="page-number">
-        <div>Displaying <span>1</span> - <span>3</span> of <span> 3</span></div>
-    </div>
-    <div class="previous-and-next">
-        <div class="flex"><span>Previous</span> <span>1</span> <span>Next</span>  </div>
-    </div>
+<section>
+<ul id="listContainer"></ul>
+<section class="pagination">
+<p>
+<span >Displaying</span>
+<b><span id="currentPage">1</span>-<span id="totalPage">5</span></b>
+<span id="totalItems">Of 50</span>
+</p>
+<div class="flex">
+    <button id="prev">Previous</button>
+    <b id="pageNumber">1</b>
+    <button id="next">Next</button>
 </div>
+</section>
+</section>
 
 <script src="./data.js"></script>
 <script src="./task-app.js"></script>
