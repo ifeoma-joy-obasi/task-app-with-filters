@@ -1,10 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,200;6..12,300;6..12,500;6..12,700;6..12,800&display=swap');
 :root{
     font-size: 62.5%;
+    --red:red;
     --light-gray: #ccc;
     --black: #131111;
     --neon-green: rgb(49, 151, 151);
     --btn-background-color:#d4d4d44d;
+        --tr-hover-bg:hsla(0, 0%, 83%, 0.142);
     --td-text-color:#7e7e7e;
     --border-bottom-color:#f3e9e9;
     --inprogress-bg:#f4e9df;
@@ -15,12 +17,20 @@
     --high-color:tomato; 
     --medium-bg:rgb(215, 225, 246);
     --medium-color:cornflowerblue;
+    --onload-color:rgba(253, 5, 80, 0.959);
+       --onload-bg:rgb(246, 215, 243);
     --todo-color:rgb(210, 53, 210);
     --todo-bg:rgb(246, 215, 243);
     --low-bg:rgb(219, 249, 249);
     --low-color:rgb(49, 151, 151);
     --span-empty-state-color:#444;
-    --btn-initial-color:#f0f0f0;
+    --white:white;
+     --teal:rgb(24, 95, 95);
+--modal-border-color:#ddd;
+--white:#fff;
+  --ds-shadow-fullscreen: 0px 1px 1px rgba(0, 0, 0, 0.02),
+    0px 8px 16px -4px rgba(0, 0, 0, 0.04),
+    0px 24px 32px -8px rgba(0, 0, 0, 0.06);
 
 }
 
@@ -35,7 +45,12 @@ body{
 font-family: 'Nunito Sans', sans-serif;
     width: min(95%, 90%);
     margin-inline: auto;
-    margin-block: 3rem;
+    margin-block: 2.2rem;
+}
+
+.user-profile{
+    margin-bottom: 1.2em;
+    color: var(--black);
 }
 
 img{
@@ -102,7 +117,8 @@ input[type="search"]::-webkit-search-results-decoration {
     font-weight: 500;
     padding: 0.4em 0.6em;
     border-radius: 3px;
-    font-size: 1.4rem;
+    font-size: 1.3rem;
+    font-weight: 600;
 }
 
 .close-btn{
@@ -120,14 +136,18 @@ input[type="search"]::-webkit-search-results-decoration {
 
 td{
     color: var(--td-text-color);
-    font-size: 1.3rem;
+    font-size: 1.4rem;
     text-align: left;
     border-bottom: 1px solid var(--border-bottom-color);
-    padding:7px 0px;
+    padding:9px 0px;
     border-collapse: collapse;
     line-height: 0px;
 }
 
+tr:is(:hover){
+    background-color: var(--tr-hover-bg);
+    cursor: context-menu;
+}
 
 .vertical-icon{
     font-size: 1.5rem;
@@ -144,6 +164,11 @@ table{
 .inprogress{
    background-color: var(--inprogress-bg);
   color: var(--inprogress-color);
+}
+
+.onload{
+   background-color: var(--onload-bg);
+  color: var(--onload-color);
 }
 
 .todo{  
@@ -195,7 +220,7 @@ color: var(--black);
 
 thead  th {
   padding: 10px 6px 10px 6px;
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   color: var(--black);
 text-align: left;
 background-color: var(--btn-background-color);
@@ -209,6 +234,7 @@ background-color: var(--btn-background-color);
     margin-top: 1.7em;
     align-items: center;
     justify-content: space-between;
+    font-weight: 600;
 }
 
 .flex{
@@ -254,13 +280,7 @@ font-size: 1.4rem;
     gap: 0.5em;
     color: var(--black);
 }
-.initial-color{
-    background-color: #f0f0f0;
-}
-.highlight{
-    background-color: var(--done-bg);
-    color: var(--done-color) !important;
-}
+
 
 .filter-icon :is(img){
     width: 23px;
@@ -270,4 +290,130 @@ font-size: 1.4rem;
 .button-filtericon-wrapper{
     display: flex;
     justify-content: space-between;
+}
+
+/* add button styles */
+.add-task-heading{
+    font-weight: 700;
+}
+.status :is(p){
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.priorities :is(p){
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.status :is(button){
+    padding: 0.3em;
+    border-radius: 0.4rem;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 1rem;
+}
+
+.priorities :is(button){
+    padding: 0.3em;
+    border-radius: 0.4rem;
+    border: none;
+    cursor: pointer;
+}
+
+div.status{
+    margin-bottom: 0.5rem;
+
+}
+
+
+.date input{
+    padding: 0.4rem 0.8rem;
+    width: 100%;
+    font-weight: 700;
+    font-size: 1.3rem;
+}
+
+.date p{
+    font-weight: 700;
+}
+
+.priorities :is(p){
+    font-weight: 700;
+    margin-top: 1rem;
+}
+
+.text-area :is(h4){
+    margin-bottom: 1rem;
+}
+.text-area :is(textarea){
+    width: 300px;
+    border-color: var(--light-gray);
+    padding: 1em;
+    margin-bottom: 0.6rem;
+}
+
+.text-area :is(textarea)::placeholder{
+font-weight: 600;
+}
+
+.text-area-input:is(:focus-visible, :focus-within) {
+    outline-color:  var(--teal);
+    
+}
+.addTask :is(button){
+    width: 300px;
+    padding: 0.7em;
+    color: var(--white);
+    background-color: var(--teal);
+    border: 0;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    margin-top: 1em;
+}
+
+.error-message{
+    color: var(--red);
+    display: block;
+    font-size: 1.4rem;
+}
+
+.close-btn-x{
+    font-weight: 600;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+.modal-heading{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+        margin-bottom: 1rem;
+
+}
+
+.modal-overlay {
+    display: none;
+    background-color: var(--white);
+    opacity: 0.8;
+    z-index: 100;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
+    overflow-y: scroll;
+    
+}
+.modal-content {
+  height: fit-content;
+  border: 1px solid var(--modal-border-color);
+  box-shadow: var(--ds-shadow-fullscreen);
+  background-color: 333, 74%, 15%;
+  padding: 20px;
+  border-radius: 6px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }

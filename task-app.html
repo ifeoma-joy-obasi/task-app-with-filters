@@ -7,6 +7,10 @@
     <link rel="stylesheet" href="./task-app.css">
 </head>
 <body>
+    <div class="user-profile">
+        <h2>Hello, IfeomaJoy</h2>
+        <p>Here are the list of your task for today</p>
+    </div>
 <div class="search-filter">
     <div class="search-filter-box">
     <img src="./images/icon-search.svg" alt="search filter icon" class="search-icon">
@@ -14,7 +18,7 @@
     <button class="close-btn" id="closeIcon"><img src="./images/close-btn.svg" alt="close icon" class="close-icon" ></button>
     </div>
     <div>
-    <button class="btn">+ Add Task</button> 
+    <button class="btn" data-add-task-button>+ Add Task</button> 
     </div>
 </div>
 
@@ -22,10 +26,10 @@
     <h4>Filter by Status</h4>
     <div class="button-filtericon-wrapper">
     <div id="statusBtns" class="btn-container">
-        <button  class="initial-color">All</button>
-        <button class="initial-color">Done</button>
-        <button class="initial-color">In progress</button>
-        <button class="initial-color">Todo</button>
+        <button class="active-color" id="all">All</button>
+        <button>Done</button>
+        <button>In progress</button>
+        <button>Todo</button>
     </div>
     <div class="filter-icon">
         <img src="./images/filter.svg" alt="filter icon">
@@ -55,10 +59,48 @@
 </p>
 <div class="flex">
     <button id="prev">Previous</button>
-    <b id="pageNumber">1</b>
+    <select class="select-Page" id="selectPageDropDown"></select>
     <button id="next">Next</button>
 </div>
 </section>
+
+<div class="modal-overlay" data-modal-container>
+    <div class="modal-content" data-modal-content>
+    <form>
+        <div class="modal-heading">
+    <h4 class="add-task-heading">Add Task</h4>
+    <div class="close-btn-x" data-close-btn-x>x</div>
+    </div>
+    <div class="status" data-status-container>
+        <p>Select Status</p>
+        <button data-status-button class="active-color">Todo</button>
+        <button data-status-button>In progress</button>
+        <button data-status-button>Done</button>
+        <button data-status-button>On load</button>
+        <p class="error-message" data-status-error-message></p>
+    </div>
+    <div class="date">
+        <p>Select Date</p>
+    <input type="date" data-date>
+    </div>
+    <div class="priorities">
+        <p>Select Priority</p>
+        <button data-priority-button class="active-color">High</button>
+        <button data-priority-button>Low</button>
+        <button data-priority-button>Medium</button>
+        <p class="error-message" data-priority-error-message></p>
+    </div>
+    <div class="text-area">
+        <h4>Describe your Task</h4>
+        <textarea data-textarea class="text-area-input" cols="30" rows="3" placeholder="Description..."></textarea>
+        <p class="error-message" data-textarea-error-message></p>
+    </div>
+    <div class="addTask">
+        <button id="addTaskBtn" data-add-task-button-modal>Add Task</button>
+    </div>
+    </form>
+    </div>
+</div>
 </section>
 
 <script src="./data.js"></script>

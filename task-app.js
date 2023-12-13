@@ -3,6 +3,10 @@ const searchInput = document.querySelector("#searchInput");
 const closeIcon = document.querySelector("#closeIcon");
 const tableBody = document.querySelector("#tableBody");
 const buttons = document.querySelectorAll("div#statusBtns button");
+const prevButton = document.querySelector("#prev");
+const nextButton = document.querySelector("#next");
+const selectPageDropDown = document.querySelector("#selectPageDropDown");
+
 
 searchInput.addEventListener('focus', () => {
     closeIcon.style.display = 'block'
@@ -14,24 +18,56 @@ searchInput.addEventListener("focusout", () => {
 });
 
 closeIcon.addEventListener('mousedown', (e) => {
-    e.preventDefault();
-    searchInput.value = ''
+  e.preventDefault();
+  searchInput.value = ''
     
-})
+});
+
+const ITEMS_PER_PAGE = 10;
+
+const pagination = {
+  pageNumber: 1,
+  totalPages:Math.ceil(
+    data.length / ITEMS_PER_PAGE
+  ),
+  increasePageNumber: () => {
+    pagination.pageNumber++;
+    return pagination.pageNumber;
+  },
+  decreasePageNumber: () => {
+    pagination.pageNumber--;
+    return pagination.pageNumber;
+  },
+  setCount: (num) => {
+    return (pagination.pageNumber = num)
+  }
+};
+
 
 
 document.addEventListener('DOMContentLoaded', () => {
-  filteredList.filterByDescription('')
+  filteredList.filterByDescription('');
+  let array = [];
+  for (let count = 0; count < pagination.totalPages; count++){
+    array.push(count + 1);
+  }
+
+  array.forEach((el) => {
+    let option = document.createElement('option');
+    option.value = el;
+    option.innerText = el;
+    selectPageDropDown.appendChild(option);
+  
+  })
+
+
 })
 
 
 //pagination functionality
-const prevButton = document.querySelector("#prev");
-const nextButton = document.querySelector("#next");
-
-const ITEMS_PER_PAGE = 10;
 
 const paginationButtonsFunctionality = () => {
+  selectPageDropDown.value = pagination.pageNumber;
   //disable buttons
   if (pagination.pageNumber == 1) {
     disablePrevButton();
@@ -40,7 +76,7 @@ const paginationButtonsFunctionality = () => {
     prevButton.style.opacity = 1;
   }
 
-  if (pagination.pageNumber == 5) {
+  if (pagination.pageNumber == pagination.totalPages) {
     nextButton.disabled = true;
     nextButton.style.opacity = 0.3;
   } else {
@@ -48,12 +84,7 @@ const paginationButtonsFunctionality = () => {
     nextButton.style.opacity = 1;
   }
 
-  document.querySelector("#totalPage").innerText = Math.ceil(
-    data.length / ITEMS_PER_PAGE
-  );
-  document.querySelector("#currentPage").innerText = pagination.pageNumber;
-  document.querySelector("#totalItems").innerText = `Of ${data.length}`;
-  document.querySelector("#pageNumber").innerText = pagination.pageNumber;
+
 }
 
 const displayData = (dataList) => {
@@ -67,18 +98,7 @@ const displayData = (dataList) => {
 
 
 
-const pagination = {
-  pageNumber: 1,
-  increasePageNumber: () => {
-    pagination.pageNumber++;
-    return pagination.pageNumber;
-  },
-  decreasePageNumber: () => {
-    pagination.pageNumber--;
-    return pagination.pageNumber;
-  },
-};
-//disable button to startwith
+//disable button 
 const disablePrevButton = () => {
 prevButton.disabled = true;
 prevButton.style.opacity = 0.3;
@@ -90,11 +110,9 @@ const paginate = (list, itemsPerPage, pageNumber) => {
   return list.slice((pageNumber - 1) * itemsPerPage, pageNumber * itemsPerPage);
 };
 
-let dataList = paginate(data, ITEMS_PER_PAGE, 1);
-
-
 
 nextButton.addEventListener('click', () => {
+  
 let dataList = paginate(
   data,
   ITEMS_PER_PAGE,
@@ -102,10 +120,21 @@ let dataList = paginate(
   );
   displayData(dataList);
 
+})
 
+selectPageDropDown.addEventListener('input', (e) => {
+  
+  
+  let dataList = paginate(
+    data,
+    ITEMS_PER_PAGE,
+    pagination.setCount(e.target.value)
+  );
+  return displayData(dataList);
 })
 
 prevButton.addEventListener("click", () => {
+  
   let dataList = paginate(
     data,
     ITEMS_PER_PAGE,
@@ -120,6 +149,7 @@ return displayData(dataList);
 const filteredList = {
   list: [],
   filterByDescription: (query) => {
+    let dataList = paginate(data, ITEMS_PER_PAGE, pagination.pageNumber);
     filteredList.list = dataList.filter(({ description }) => {
       return description.toLowerCase().includes(query);
     });
@@ -130,7 +160,7 @@ const filteredList = {
     filteredList.list = dataList.filter(({ status }) => {
     return status
         .toLowerCase()
-        .includes(query.toLowerCase().replace(/\s/g, ""));
+        .includes(query);
     });
     upDateFilteredUi();
    },
@@ -148,7 +178,7 @@ const upDateFilteredUi = () => {
     filteredList.list.map((task, index) => {
       //i want to empty the empty state element when the array is being filtered
       emptyState.innerHTML = "";
-      
+
       //as the filteredList array is being filtered i want to show the thead element content
       tableHeadings.innerHTML = `
       <th class="serial-num">S/N</th>
@@ -164,9 +194,9 @@ const upDateFilteredUi = () => {
       tr.innerHTML += `
       <td>${index + 1}</td>
       <td>${task.description}</td>
-      <td><button class = "round-btn  ${task.status.toLowerCase()}">${
-        task.status
-      }</button></td>
+      <td><button class = "round-btn  ${task.status
+        .toLowerCase()
+        .replace(/\s/g, "")}">${task.status}</button></td>
       <td>${task.date}</td>
       <td><button class="round-btn ${task.priority.toLowerCase()}">${
         task.priority
@@ -176,7 +206,7 @@ const upDateFilteredUi = () => {
       tableBody.appendChild(tr);
     });
   }
-  
+
   if (filteredList.list.length <= 0) {
     let emptyState = document.querySelector("#emptyState");
     emptyState.innerHTML = `
@@ -185,8 +215,11 @@ const upDateFilteredUi = () => {
     <span>check the spelling or try a new search</span>
     `;
   }
-};
 
+  document.querySelector("#totalPage").innerText = pagination.totalPages;
+  document.querySelector("#currentPage").innerText = pagination.pageNumber;
+  document.querySelector("#totalItems").innerText = `Of ${data.length}`;
+};
 
 
 closeIcon.addEventListener('click', () => {
@@ -200,31 +233,140 @@ searchInput.addEventListener("input", (e) => {
 
 //filter by status functionality
 
-for (btn in buttons) {
-    
-  buttons[0].classList.add('active-color');
+buttons.forEach((statusButton) => {
+
+  statusButton.addEventListener('click', (e) => {
+    buttons.forEach((btn) => {
+      btn.classList.remove("active-color");
+    })
+    e.target.classList.add("active-color");
+    let text = e.target.textContent.toLowerCase();
+
+    if (text == "all") {
+      filteredList.filterByStatus("");
+    } else {
+      filteredList.filterByStatus(text);
+    }
+  })
+})
+
+//add modal functionality
+const modalOverlay = document.querySelector("[data-modal-container]");
+const CloseBtnX = document.querySelector("[data-close-btn-x]");
+const addTaskBtn = document.querySelector("[data-add-task-button]");
+const addTaskButtonModal = document.querySelector("[data-add-task-button-modal]");
+const statusButtons = document.querySelectorAll("[data-status-button]");
+const statusContainer = document.querySelector("[data-status-container]");
+const priorityButtons = document.querySelectorAll("[data-priority-button]");
+const statusErrorMessage = document.querySelector("[data-status-error-message]");
+const priorityErrorMessage = document.querySelector("[data-priority-error-message]");
+const textareaErrorMessage = document.querySelector("[data-textarea-error-message]");
+const textarea = document.querySelector("[data-textarea]");
+const time = document.querySelector("[data-date]")
+
+const task = {
+  id: Math.random(),
+  status: "",
+  priority: "",
+  description: "",
+  date: ''
+};
+
+
+
   
-  buttons[btn].onclick = function () {
-      buttons[0].classList.remove("active-color");
-      
-        buttons.forEach((btn)=>{
-          btn.classList.remove('highlight');
-          
-        })
-    this.classList.add('highlight');
-    
+const formValid = () => {
+    if (task.status == "") {
+      statusErrorMessage.innerText = "please select status";
+    } else {
+      statusErrorMessage.innerText = "";
+    }
+
+    if (task.priority == "") {
+      priorityErrorMessage.innerText = "please select priority";
+    } else {
+      priorityErrorMessage.innerText = "";
+    }
+
+    if (task.description == "") {
+      textareaErrorMessage.innerText = "please write on the description";
+    } else {
+      textareaErrorMessage.innerText = "";
+    }
   }
 
-}
+addTaskBtn.addEventListener('click', () => {
+  modalOverlay.style.display = "block";
+})
 
-  buttons.forEach((statusBtn) => {
-    statusBtn.addEventListener("click", (e) => {
-      let text = e.target.textContent.toLowerCase();
-      if (text == "all") {
-        filteredList.filterByStatus("");
-      } else {
-        filteredList.filterByStatus(text);
-      }
+CloseBtnX.addEventListener('click', () => {
+  modalOverlay.style.display = "none"
+})
+
+addTaskButtonModal.addEventListener('click', (e) => {
+  e.preventDefault()
+
+  //form validation
+  formValid()
+
+//form validation before actualy adding task to the todo list
+  if (task.description && task.status && task.priority && task.date) {
+    data.push(task);
+     let dataList = paginate([task, ...data], ITEMS_PER_PAGE, pagination.pageNumber);
+     filteredList.list = dataList.filter(({ description }) => {
+      return description.toLowerCase().includes("");
+     });
+    upDateFilteredUi();
+    modalOverlay.style.display = "none";
+  }
+
+
+})
+
+statusButtons.forEach((statusButton) => {
+  statusButton.addEventListener('click', (e) => {
+    e.preventDefault();
+    statusButtons.forEach((btn) => {
+      btn.classList.remove("active-color");
+    })
+    e.target.classList.add("active-color");
+    task.status = e.target.innerText;
+  })
+});
+
+priorityButtons.forEach((priorityButton) => {
+  priorityButton.addEventListener("click", (e) => {
+    e.preventDefault();
+    priorityButtons.forEach((btn) => {
+      btn.classList.remove("active-color");
     });
+    e.target.classList.add("active-color");
+    task.priority = e.target.innerText;
   });
+});
+
+textarea.addEventListener('input', (e) => {
+  task.description = e.target.value;
+});
+
+
+document.addEventListener('click', (e) => {
+  if (e.target == modalOverlay) {
+    modalOverlay.style.display = "none";
+  }
+});
+
+
+
+time.addEventListener('input', (e) => {
+  let timeStamp = new Date(e.target.value).getTime();
+  let date = new Date();
+  let dateInput = `${date.getDate()}th ${new Date(timeStamp).toLocaleDateString(
+    "en-GB",
+    {
+      month: "short",
+    }
+  )}, ${date.getFullYear()}`;
+  task.date = dateInput;
+});
 
