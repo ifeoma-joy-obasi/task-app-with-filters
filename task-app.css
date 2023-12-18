@@ -17,15 +17,15 @@
     --high-color:tomato; 
     --medium-bg:rgb(215, 225, 246);
     --medium-color:cornflowerblue;
-    --onload-color:rgba(253, 5, 80, 0.959);
-       --onload-bg:rgb(246, 215, 243);
+    --onhold-color:rgb(193, 93, 143);
+       --onhold-bg:rgb(246, 219, 232);
     --todo-color:rgb(210, 53, 210);
     --todo-bg:rgb(246, 215, 243);
     --low-bg:rgb(219, 249, 249);
     --low-color:rgb(49, 151, 151);
     --span-empty-state-color:#444;
     --white:white;
-     --teal:rgb(24, 95, 95);
+     --teal:rgb(49, 151, 151);
 --modal-border-color:#ddd;
 --white:#fff;
   --ds-shadow-fullscreen: 0px 1px 1px rgba(0, 0, 0, 0.02),
@@ -45,11 +45,11 @@ body{
 font-family: 'Nunito Sans', sans-serif;
     width: min(95%, 90%);
     margin-inline: auto;
-    margin-block: 2.2rem;
+    margin-block: 3rem;
 }
 
 .user-profile{
-    margin-bottom: 1.2em;
+    margin-bottom: 1.5em;
     color: var(--black);
 }
 
@@ -82,6 +82,7 @@ cursor: text;
 
 .search-filter-box{
     position: relative;
+    margin-bottom: 0.5em;
 }
 
 .search-input{
@@ -136,7 +137,7 @@ input[type="search"]::-webkit-search-results-decoration {
 
 td{
     color: var(--td-text-color);
-    font-size: 1.4rem;
+    font-size: 1.5rem;
     text-align: left;
     border-bottom: 1px solid var(--border-bottom-color);
     padding:9px 0px;
@@ -150,7 +151,7 @@ tr:is(:hover){
 }
 
 .vertical-icon{
-    font-size: 1.5rem;
+    font-size: 2rem;
     cursor: pointer;
 font-weight: 600;
 }
@@ -166,9 +167,9 @@ table{
   color: var(--inprogress-color);
 }
 
-.onload{
-   background-color: var(--onload-bg);
-  color: var(--onload-color);
+.onhold{
+   background-color: var(--onhold-bg);
+  color: var(--onhold-color);
 }
 
 .todo{  
@@ -219,8 +220,9 @@ color: var(--black);
 }
 
 thead  th {
+    font-weight: 700;
   padding: 10px 6px 10px 6px;
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   color: var(--black);
 text-align: left;
 background-color: var(--btn-background-color);
@@ -241,7 +243,6 @@ background-color: var(--btn-background-color);
     display: flex;
     gap: 1.5em;
 }
-
 
 
 .pagination :is(button){
@@ -332,10 +333,11 @@ div.status{
     width: 100%;
     font-weight: 700;
     font-size: 1.3rem;
+    margin-bottom: 0.6rem;
 }
 
 .date p{
-    font-weight: 700;
+    font-weight: 600;
 }
 
 .priorities :is(p){
@@ -416,4 +418,16 @@ font-weight: 600;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+/* sorting arrows stylings */
+.date-container-heading{
+display: flex;
+gap: 1rem;
+align-items: center;
+}
+
+[data-upwardArrow], [data-downwardArrow]{
+    font-weight: 900;
+    cursor: pointer;
 }

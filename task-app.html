@@ -7,10 +7,14 @@
     <link rel="stylesheet" href="./task-app.css">
 </head>
 <body>
+    
+    <!-- user profile -->
     <div class="user-profile">
         <h2>Hello, IfeomaJoy</h2>
         <p>Here are the list of your task for today</p>
     </div>
+
+    <!-- search filter -->
 <div class="search-filter">
     <div class="search-filter-box">
     <img src="./images/icon-search.svg" alt="search filter icon" class="search-icon">
@@ -37,18 +41,31 @@
     </div>
 </div>
 
-
+<!-- table -->
 <div class="table-container">
 <table>
     <thead id="tableHeadingContainer" class="table-heading">
-        <tr id="tableHeadings"></tr>
+        <tr id="tableHeadings">
+            <th class="serial-num">S/N</th>
+    <th class="description">Description</th>
+    <th class="status">Status</th>
+        <th class="date-container-heading">
+            <span>Date</span>
+            <span data-upwardArrow>&#8593;</span>
+            <span data-downwardArrow>&#8595;</span>
+        </th>
+    <th class="priority">priority</th>
+    <th class="icon"></th>
+        </tr>
     </thead>
     <tbody id="tableBody"></tbody>
 </table>
 </div>
 
+<!-- empty state  -->
 <div class="empty-state" id="emptyState"></div>
 
+<!-- pagination -->
 <section>
 <ul id="listContainer"></ul>
 <section class="pagination">
@@ -64,19 +81,20 @@
 </div>
 </section>
 
+<!-- add task modal -->
 <div class="modal-overlay" data-modal-container>
     <div class="modal-content" data-modal-content>
-    <form>
+    <form data-form>
         <div class="modal-heading">
     <h4 class="add-task-heading">Add Task</h4>
     <div class="close-btn-x" data-close-btn-x>x</div>
     </div>
     <div class="status" data-status-container>
         <p>Select Status</p>
-        <button data-status-button class="active-color">Todo</button>
+        <button data-status-button>Todo</button>
         <button data-status-button>In progress</button>
         <button data-status-button>Done</button>
-        <button data-status-button>On load</button>
+        <button data-status-button>On hold</button>
         <p class="error-message" data-status-error-message></p>
     </div>
     <div class="date">
@@ -85,7 +103,7 @@
     </div>
     <div class="priorities">
         <p>Select Priority</p>
-        <button data-priority-button class="active-color">High</button>
+        <button data-priority-button>High</button>
         <button data-priority-button>Low</button>
         <button data-priority-button>Medium</button>
         <p class="error-message" data-priority-error-message></p>
@@ -103,8 +121,7 @@
 </div>
 </section>
 
-<script src="./data.js"></script>
-<script src="./task-app.js"></script>
+<script type="module" src="./js/task-app.js"></script>
 
 </body>
 

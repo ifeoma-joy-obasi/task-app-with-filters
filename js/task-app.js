@@ -1,3 +1,13 @@
+import { data } from "./data.js";
+import { formateTime } from "./helpers.js"
+
+
+
+const dataList = () => {
+  return paginate(data, ITEMS_PER_PAGE, pagination.pageNumber);
+};
+
+
 //variables
 const searchInput = document.querySelector("#searchInput");
 const closeIcon = document.querySelector("#closeIcon");
@@ -59,6 +69,13 @@ document.addEventListener('DOMContentLoaded', () => {
     selectPageDropDown.appendChild(option);
   
   })
+
+  const formateToDateString = () => {
+    // return the current date in this format YYYY-MM-DD
+    let date = new Date();
+    return `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+  }
+  document.querySelector("[data-date]").value = formateToDateString();
 
 
 })
@@ -149,18 +166,16 @@ return displayData(dataList);
 const filteredList = {
   list: [],
   filterByDescription: (query) => {
-    let dataList = paginate(data, ITEMS_PER_PAGE, pagination.pageNumber);
-    filteredList.list = dataList.filter(({ description }) => {
+    dataList();
+    filteredList.list = dataList().filter(({ description }) => {
       return description.toLowerCase().includes(query);
     });
     upDateFilteredUi();
   },
   filterByStatus: (query) => {
-    let dataList = paginate(data, ITEMS_PER_PAGE, pagination.pageNumber);
-    filteredList.list = dataList.filter(({ status }) => {
-    return status
-        .toLowerCase()
-        .includes(query);
+  dataList();
+    filteredList.list = dataList().filter(({ status }) => {
+      return status.toLowerCase().includes(query);
     });
     upDateFilteredUi();
    },
@@ -173,31 +188,22 @@ const filteredList = {
 
 const upDateFilteredUi = () => {
   tableBody.innerHTML = "";
-  tableHeadings.innerHTML = "";
   if (filteredList.list.length > 0) {
     filteredList.list.map((task, index) => {
       //i want to empty the empty state element when the array is being filtered
       emptyState.innerHTML = "";
 
-      //as the filteredList array is being filtered i want to show the thead element content
-      tableHeadings.innerHTML = `
-      <th class="serial-num">S/N</th>
-            <th class="description">Description</th>
-            <th class="status">Status</th>
-            <th class="date">Date</th>
-            <th class="priority">priority</th>
-            <th class="icon"></th>
-      `;
-
       //create and append the tr element to the tbody element
       let tr = document.createElement("tr");
+      
+      let timeStamp = new Date(task.date).getTime();
       tr.innerHTML += `
       <td>${index + 1}</td>
       <td>${task.description}</td>
       <td><button class = "round-btn  ${task.status
         .toLowerCase()
         .replace(/\s/g, "")}">${task.status}</button></td>
-      <td>${task.date}</td>
+      <td>${formateTime(timeStamp)}</td>
       <td><button class="round-btn ${task.priority.toLowerCase()}">${
         task.priority
       }</button></td>
@@ -262,17 +268,18 @@ const statusErrorMessage = document.querySelector("[data-status-error-message]")
 const priorityErrorMessage = document.querySelector("[data-priority-error-message]");
 const textareaErrorMessage = document.querySelector("[data-textarea-error-message]");
 const textarea = document.querySelector("[data-textarea]");
-const time = document.querySelector("[data-date]")
+const time = document.querySelector("[data-date]");
+const form = document.querySelector("[data-form]");
 
-const task = {
+const initialTask = {
   id: Math.random(),
   status: "",
   priority: "",
   description: "",
-  date: ''
+  date: '',
 };
 
-
+let task = initialTask;
 
   
 const formValid = () => {
@@ -303,6 +310,14 @@ CloseBtnX.addEventListener('click', () => {
   modalOverlay.style.display = "none"
 })
 
+// add task functionality
+const addTask = (data, task = {}, paginate, pageNumber = 1, displayData)=>{
+  data.unshift(task);
+  const paginatedData = paginate(data, ITEMS_PER_PAGE, pageNumber);
+  displayData(paginatedData);
+  }
+
+
 addTaskButtonModal.addEventListener('click', (e) => {
   e.preventDefault()
 
@@ -311,13 +326,23 @@ addTaskButtonModal.addEventListener('click', (e) => {
 
 //form validation before actualy adding task to the todo list
   if (task.description && task.status && task.priority && task.date) {
-    data.push(task);
-     let dataList = paginate([task, ...data], ITEMS_PER_PAGE, pagination.pageNumber);
-     filteredList.list = dataList.filter(({ description }) => {
-      return description.toLowerCase().includes("");
-     });
-    upDateFilteredUi();
+    addTask(
+      data,
+      Object.assign({}, task),
+      paginate,
+      pagination.pageNumber,
+      displayData,
+    )
+    //closing add task modal after filling and adding task to the list
     modalOverlay.style.display = "none";
+    //reseting the addtask modal form
+    form.reset();
+    statusButtons.forEach((statusButton) => {
+      statusButton.classList.remove("active-color");
+    });
+    priorityButtons.forEach((priorityButton) => {
+      priorityButton.classList.remove("active-color");
+    });
   }
 
 
@@ -359,14 +384,42 @@ document.addEventListener('click', (e) => {
 
 
 time.addEventListener('input', (e) => {
-  let timeStamp = new Date(e.target.value).getTime();
-  let date = new Date();
-  let dateInput = `${date.getDate()}th ${new Date(timeStamp).toLocaleDateString(
-    "en-GB",
-    {
-      month: "short",
-    }
-  )}, ${date.getFullYear()}`;
-  task.date = dateInput;
+   let timeStamp = new Date(e.target.value).getTime();
+  task.date = formateTime(timeStamp);
+
 });
+
+
+// sorting date either in ascending or decending order
+
+// decending order sorting
+const upwardArrow = document.querySelector("[data-upwardArrow]");
+
+upwardArrow.addEventListener('mouseenter', () => {
+upwardArrow.title = 'decending order'
+})
+
+upwardArrow.onclick = () => {
+  downwardArrow.style.color = "";
+  upwardArrow.style.color = "red";
+  dataList();
+  let decendingOrderData = dataList().sort((a, b) => b.date - a.date);
+  displayData(decendingOrderData);
+};
+
+// ascending order sorting
+const downwardArrow = document.querySelector("[data-downwardArrow]");
+
+downwardArrow.addEventListener("mouseenter", () => {
+  downwardArrow.title = "ascending order";
+});
+
+downwardArrow.onclick = () => {
+  upwardArrow.style.color = "";
+  downwardArrow.style.color= "red"
+  dataList();
+  let ascendingOrderData = dataList().sort((a, b) => a.date - b.date);
+  displayData(ascendingOrderData);
+};
+
 
